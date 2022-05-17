@@ -22,6 +22,10 @@ func main() {
 
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	response := helloWorldResponse{Message: "Hello, World!"}
-	encoder := json.NewEncoder(w) // 열려 있는 Writer에 JSON을 바로 쓸 수 있는 Encoder 객체를 반환함
-	encoder.Encode(response)
+	data, err := json.Marshal(response)
+	if err != nil {
+		panic("Ooops")
+	}
+
+	fmt.Fprint(w, string(data))
 }
